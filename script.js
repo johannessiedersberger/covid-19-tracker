@@ -105,12 +105,17 @@ const buildPieChart = (chartData) => {
         type: 'pie',
         data: {
             datasets: [{
-                data: [10, 20, 30]
+                data: [10, 20, 30],
+                backgroundColor: [
+                    'rgba(252, 57, 3, 100)',
+                    'rgba(252, 186, 3, 100)',
+                    'rgba(3, 86, 252, 100)'
+                ]
             }],
             labels: [
-                'Red',
-                'Yellow',
-                'Blue'
+                'Active',
+                'Recovered',
+                'Death'
             ]
         },
         options: {
@@ -119,7 +124,8 @@ const buildPieChart = (chartData) => {
                 mode: 'index',
                 intersect: false
             },
-        }
+        },
+       
     });
 }
 
