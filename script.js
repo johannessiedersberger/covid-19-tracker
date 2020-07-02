@@ -34,6 +34,7 @@ const getHistoricalData = () => {
     }).then((data)=>{
         let chartData = buildChartData(data);
         buildChart(chartData);
+        buildPieChart(chartData);
     })
 }
 
@@ -92,6 +93,32 @@ const buildChart = (chartData) => {
                     }
                 }]
             }
+        }
+    });
+}
+
+const buildPieChart = (chartData) => {
+    var timeFormat = 'MM/DD/YY';
+    var ctx = document.getElementById('pieChart').getContext('2d');
+
+    var myPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [10, 20, 30]
+            }],
+            labels: [
+                'Red',
+                'Yellow',
+                'Blue'
+            ]
+        },
+        options: {
+            maintainAspectRatio: false,
+            tooltips: {
+                mode: 'index',
+                intersect: false
+            },
         }
     });
 }
