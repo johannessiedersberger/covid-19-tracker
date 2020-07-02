@@ -9,6 +9,14 @@ window.onload = () => {
 
 var map;
 var infoWindow;
+
+var colors = {
+    allCases: '#1d2c4d',
+    activeCases : '#FF0000',
+    recoveredCases: '#25b840',
+    deathsCases: '#020d1f'
+}
+
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 39.8283, lng: -98.5795},
@@ -45,6 +53,7 @@ const getWorldData = () => {
             document.getElementById(idStrings[i]).innerHTML = setCommas(caseNumbers[i]);
         }
 
+        buildPieChart(caseNumbers);
         
     });
 
@@ -60,7 +69,7 @@ const getHistoricalData = () => {
     }).then((data)=>{
         let chartData = buildChartData(data);
         buildChart(chartData);
-        buildPieChart(chartData);
+        
     })
 }
 
@@ -89,8 +98,8 @@ const buildChart = (chartData) => {
         data: {
             datasets: [{
                 label: 'Total Cases',
-                backgroundColor: '#1d2c4d',
-                borderColor: '#1d2c4d',
+                backgroundColor: colors.allCases,
+                borderColor: colors.allCases,
                 data: chartData
             }]
         },
@@ -131,11 +140,11 @@ const buildPieChart = (chartData) => {
         type: 'pie',
         data: {
             datasets: [{
-                data: [10, 20, 30],
+                data: [chartData[1], chartData[2], chartData[3]],
                 backgroundColor: [
-                    'rgba(252, 57, 3, 100)',
-                    'rgba(252, 186, 3, 100)',
-                    'rgba(3, 86, 252, 100)'
+                    colors.activeCases,
+                    colors.recoveredCases,
+                    colors.deathsCases,
                 ]
             }],
             labels: [
