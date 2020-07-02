@@ -3,6 +3,7 @@
 window.onload = () => {
     getCountryData();
     getHistoricalData();
+    getWorldData();
 }
 
 
@@ -18,7 +19,7 @@ function initMap() {
 }
 
 const getCountryData = () => {
-    fetch("https://corona.lmao.ninja/v2/countries")
+    fetch("https://disease.sh/v3/covid-19/countries")
     .then((response)=>{
         return response.json()
     }).then((data)=>{
@@ -27,8 +28,33 @@ const getCountryData = () => {
     })
 }
 
+const getWorldData = () => {
+    fetch("https://disease.sh/v3/covid-19/all")
+    .then((response)=>{
+        return response.json()
+    }).then((data)=>{
+        var totalCases = data.cases;
+        var activeCases = data.active;
+        var recovered = data.recovered;
+        var death = data.deaths;
+
+        var caseNumbers = [data.cases, data.active, data.recovered, data.deaths];
+        var idStrings = ['total-cases', 'active-cases', 'recovered-cases', 'death-cases'];
+
+        for(i=0;i<caseNumbers.length; i++){
+            document.getElementById(idStrings[i]).innerHTML = setCommas(caseNumbers[i]);
+        }
+
+        
+    });
+
+    const setCommas = (number) => {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+}
+
 const getHistoricalData = () => {
-    fetch("https://corona.lmao.ninja/v2/historical/all?lastdays=120")
+    fetch("https://disease.sh/v3/covid-19/historical/all?lastdays=120")
     .then((response)=>{
         return response.json()
     }).then((data)=>{
