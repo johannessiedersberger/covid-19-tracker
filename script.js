@@ -1,11 +1,11 @@
 
 
 window.onload = () => {
+    mapState = { color: colors.allCases , cases : 'cases'}
     getCountryData();
     getHistoricalData();
     getWorldData();
 }
-
 
 var map;
 var infoWindow;
@@ -17,6 +17,11 @@ var colors = {
     deathsCases: '#020d1f'
 }
 
+var mapState = {
+    color: '',
+    cases: ''
+}
+
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 39.8283, lng: -98.5795},
@@ -25,6 +30,7 @@ function initMap() {
     });
     infoWindow = new google.maps.InfoWindow();
 }
+
 
 const getCountryData = () => {
     fetch("https://disease.sh/v3/covid-19/countries")
@@ -41,21 +47,56 @@ const getWorldData = () => {
     .then((response)=>{
         return response.json()
     }).then((data)=>{
-        var totalCases = data.cases;
-        var activeCases = data.active;
-        var recovered = data.recovered;
-        var death = data.deaths;
 
-        var caseNumbers = [data.cases, data.active, data.recovered, data.deaths];
-        var idStrings = ['total-cases', 'active-cases', 'recovered-cases', 'death-cases'];
-
-        for(i=0;i<caseNumbers.length; i++){
-            document.getElementById(idStrings[i]).innerHTML = setCommas(caseNumbers[i]);
+        var cardValues = {
+            caseNumbers: [data.cases, data.active, data.recovered, data.deaths],
+            stringColors: [colors.allCases, colors.activeCases, colors.recoveredCases, colors.deathsCases],
+            idStrings : ['total-cases', 'active-cases', 'recovered-cases', 'death-cases']
         }
 
-        buildPieChart(caseNumbers);
+        setCardValues(cardValues);
+
         
+        buildPieChart(cardValues.caseNumbers);
+        var cards = ['total-cases-card', 'active-cases-card', 'recovered-cases-card', 'death-cases-card'];
+        var totalCasesButton = document.getElementById(cards[0]);
+        var activeCasesButton = document.getElementById(cards[1]);
+        var recoverdCasesButton = document.getElementById(cards[2]);
+        var deathCasesButton = document.getElementById(cards[3]);
+
+        totalCasesButton.addEventListener('click', function() {
+            mapState = { color: colors.allCases , cases : 'cases'}
+            cleanMap();
+            getCountryData();
+        }, false);
+        activeCasesButton.addEventListener('click', function() {
+            mapState = { color: colors.activeCases , cases : 'active'};
+            cleanMap();
+            getCountryData();
+        }, false);
+        recoverdCasesButton.addEventListener('click', function() {
+            mapState = { color: colors.recoveredCases , cases : 'recovered'};
+            cleanMap();
+            getCountryData();
+        }, false);
+        deathCasesButton.addEventListener('click', function() {
+            mapState = { color: colors.deathsCases , cases : 'deaths'};
+            cleanMap();
+            getCountryData();
+        }, false);
+
     });
+
+    const setCardValues = (values) => {
+        for( i=0; i < values.caseNumbers.length; i++){
+            var html = `
+                <div style="color:${values.stringColors[i]}" >
+                    ${setCommas(values.caseNumbers[i])}
+                </div>
+            `;
+            document.getElementById(values.idStrings[i]).innerHTML = html;
+        }
+    }
 
     const setCommas = (number) => {
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -165,11 +206,11 @@ const buildPieChart = (chartData) => {
 }
 
 
-
-
 const openInfoWindow = () => {
     infoWindow.open(map);
 }
+
+const circles = [];
 
 const showDataOnMap = (data) => {
     data.map((country)=>{
@@ -178,16 +219,23 @@ const showDataOnMap = (data) => {
             lng: country.countryInfo.long
         }
 
+        var values = {
+            color: mapState.color,
+            cases: country[mapState.cases]
+        }
+        
         var countryCircle = new google.maps.Circle({
-            strokeColor: '#FF0000',
+            strokeColor: values.color,
             strokeOpacity: 0.8,
             strokeWeight: 2,
-            fillColor: '#FF0000',
+            fillColor: values.color,
             fillOpacity: 0.35,
             map: map,
             center: countryCenter,
-            radius: country.cases
+            radius: values.cases
         });
+
+        circles.push(countryCircle);
 
         var html = `
             <div class="info-container">
@@ -218,10 +266,15 @@ const showDataOnMap = (data) => {
 
         google.maps.event.addListener(countryCircle, 'mouseout', function(){
             infoWindow.close();
-        })
+        });
 
     })
+}
 
+const cleanMap = () => {
+    circles.forEach((circle => {
+        circle.setMap(null);
+    }))
 }
 
 const showDataInTable = (data) => {
@@ -236,6 +289,6 @@ const showDataInTable = (data) => {
         </tr>
         `
     })
-    document.getElementById('table-data').innerHTML = html;
+    //document.getElementById('table-data').innerHTML = html;
 }
 
