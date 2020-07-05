@@ -28,6 +28,12 @@
     border-radius: 12px;
 }
 
+.countries-container {
+    background-color: #EFF2F6;
+    border-radius: 12px;
+    height: 100%;
+}
+
 .linear-chart {
     height: 100%;
 }

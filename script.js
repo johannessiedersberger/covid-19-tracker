@@ -32,6 +32,8 @@ function initMap() {
 }
 
 
+var countryData = null;
+
 const getCountryData = () => {
     fetch("https://disease.sh/v3/covid-19/countries")
     .then((response)=>{
@@ -39,6 +41,8 @@ const getCountryData = () => {
     }).then((data)=>{
         showDataOnMap(data);
         showDataInTable(data);
+        countryData = (data);
+        console.log(countryData);
     })
 }
 
@@ -59,32 +63,35 @@ const getWorldData = () => {
         
         buildPieChart(cardValues.caseNumbers);
         var cards = ['total-cases-card', 'active-cases-card', 'recovered-cases-card', 'death-cases-card'];
+
         var totalCasesButton = document.getElementById(cards[0]);
         var activeCasesButton = document.getElementById(cards[1]);
         var recoverdCasesButton = document.getElementById(cards[2]);
         var deathCasesButton = document.getElementById(cards[3]);
 
         totalCasesButton.addEventListener('click', function() {
-            mapState = { color: colors.allCases , cases : 'cases'}
+            mapState = { color: colors.allCases , cases : 'cases'};
             cleanMap();
-            getCountryData();
+            showDataOnMap(countryData);
+            totalCasesButton.style.background = "grey"; 
         }, false);
         activeCasesButton.addEventListener('click', function() {
             mapState = { color: colors.activeCases , cases : 'active'};
             cleanMap();
-            getCountryData();
+            showDataOnMap(countryData);
+            
         }, false);
         recoverdCasesButton.addEventListener('click', function() {
             mapState = { color: colors.recoveredCases , cases : 'recovered'};
             cleanMap();
-            getCountryData();
+            showDataOnMap(countryData);
         }, false);
         deathCasesButton.addEventListener('click', function() {
             mapState = { color: colors.deathsCases , cases : 'deaths'};
             cleanMap();
-            getCountryData();
+            showDataOnMap(countryData);
         }, false);
-
+        
     });
 
     const setCardValues = (values) => {
@@ -115,14 +122,33 @@ const getHistoricalData = () => {
 }
 
 const buildChartData = (data) => {
-    let chartData = [];
+    let chartData ={
+        allCases: [],
+        deaths: [],
+        recovered: []
+    }
     for(let date in data.cases){
         let newDataPoint = {
             x: date,
             y: data.cases[date]
         }
-        chartData.push(newDataPoint);
+        chartData.allCases.push(newDataPoint);
     }
+    for(let date in data.deaths){
+        let newDataPoint = {
+            x: date,
+            y: data.deaths[date]
+        }
+        chartData.deaths.push(newDataPoint);
+    }
+    for(let date in data.recovered){
+        let newDataPoint = {
+            x: date,
+            y: data.recovered[date]
+        }
+        chartData.recovered.push(newDataPoint);
+    }
+    console.log(chartData);
     return chartData;
 }
 
@@ -137,12 +163,27 @@ const buildChart = (chartData) => {
 
         // The data for our dataset
         data: {
-            datasets: [{
+            datasets: [
+            {
+                label: 'Death Cases',
+                backgroundColor: colors.deathsCases,
+                borderColor: colors.deathsCases,
+                data: chartData.deaths
+            },
+            {
+                label: 'Recovered Cases',
+                backgroundColor: colors.recoveredCases,
+                borderColor: colors.recoveredCases,
+                data: chartData.recovered
+            }, 
+            {
                 label: 'Total Cases',
                 backgroundColor: colors.allCases,
                 borderColor: colors.allCases,
-                data: chartData
-            }]
+                data: chartData.allCases
+            }, 
+           
+            ]
         },
 
         // Configuration options go here
@@ -166,7 +207,8 @@ const buildChart = (chartData) => {
                         callback: function(value, index, values) {
                             return numeral(value).format('0,0');
                         }
-                    }
+                    },
+                    
                 }]
             }
         }
