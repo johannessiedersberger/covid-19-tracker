@@ -41,6 +41,7 @@ const getCountryData = () => {
     }).then((data)=>{
         showDataOnMap(data);
         countryData = (data);
+        showDataInTable(countryData);
     })
 }
 
@@ -124,7 +125,7 @@ const changeSelectedButton = (element) => {
     cardlist.forEach((cardElement) => {
         cardElement.style.backgroundColor = "#EFF2F6";
     });
-    element.style.backgroundColor = "grey";
+    element.style.backgroundColor = "lightgrey";
     buildChart(chartData);
    
 }
@@ -224,8 +225,7 @@ const buildChart = (chartData) => {
         }
         else if(mapState.cases === 'active'){
             return data[3];
-        }
-        
+        }        
     }
 
 
@@ -370,6 +370,21 @@ const cleanMap = () => {
     circles.forEach((circle => {
         circle.setMap(null);
     }))
+}
+
+const showDataInTable = (data) => {
+    var html = '';
+    data.forEach((country)=>{
+        html += `
+        <tr>
+            <td>${country.country}</td>
+            <td>${country.cases}</td>
+            <td>${country.recovered}</td>
+            <td>${country.deaths}</td>
+        </tr>
+        `
+    })
+    document.getElementById('countries-table-body').innerHTML = html;
 }
 
 
