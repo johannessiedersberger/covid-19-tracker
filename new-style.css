@@ -56,3 +56,8 @@
 .stats-container .card-body {
     padding: 1rem;
 }
+
+.card :hover {
+    background: yellow;
+    border-radius: 12px;
+  }

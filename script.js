@@ -40,9 +40,7 @@ const getCountryData = () => {
         return response.json()
     }).then((data)=>{
         showDataOnMap(data);
-        showDataInTable(data);
         countryData = (data);
-        console.log(countryData);
     })
 }
 
@@ -73,7 +71,6 @@ const getWorldData = () => {
             mapState = { color: colors.allCases , cases : 'cases'};
             cleanMap();
             showDataOnMap(countryData);
-            totalCasesButton.style.background = "grey"; 
         }, false);
         activeCasesButton.addEventListener('click', function() {
             mapState = { color: colors.activeCases , cases : 'active'};
@@ -207,8 +204,7 @@ const buildChart = (chartData) => {
                         callback: function(value, index, values) {
                             return numeral(value).format('0,0');
                         }
-                    },
-                    
+                    },            
                 }]
             }
         }
@@ -319,18 +315,4 @@ const cleanMap = () => {
     }))
 }
 
-const showDataInTable = (data) => {
-    var html = '';
-    data.forEach((country)=>{
-        html += `
-        <tr>
-            <td>${country.country}</td>
-            <td>${country.cases}</td>
-            <td>${country.recovered}</td>
-            <td>${country.deaths}</td>
-        </tr>
-        `
-    })
-    //document.getElementById('table-data').innerHTML = html;
-}
 
