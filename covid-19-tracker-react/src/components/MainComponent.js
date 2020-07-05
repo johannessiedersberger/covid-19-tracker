@@ -12,15 +12,35 @@ import 'font-awesome/css/font-awesome.css';
 class Main extends Component {
     constructor(props){
         super(props);
+        this.state = {
+            isLoading: true,
+            worldData: null,
+
+        }
+
+    }
+
+    componentDidMount() {
+        fetch("https://disease.sh/v3/covid-19/all")
+            .then((response) => {
+                return response.json()
+            }).then((data) => {
+                this.setState({ worldData: data, isLoading: false });
+            });
     }
 
     render(){
+ 
+    if (this.state.isLoading) {
+      return <p>Loading ...</p>;
+    }
+
         return (
             <div class="container-fluid main">
                 <div class="row">
                     <div class="col-8">
                         <Header />
-                        <Tab/>
+                        <Tab worldData={this.state.worldData}/>
                     </div>
                 </div>
             </div>
