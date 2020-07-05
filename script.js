@@ -110,9 +110,9 @@ const getWorldData = () => {
     const setCommas = (number) => {
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
+
+   
 }
-
-
 
 const changeSelectedButton = (element) => {
     var cards = ['total-cases-card', 'active-cases-card', 'recovered-cases-card', 'death-cases-card'];
@@ -125,24 +125,28 @@ const changeSelectedButton = (element) => {
         cardElement.style.backgroundColor = "#EFF2F6";
     });
     element.style.backgroundColor = "grey";
+    buildChart(chartData);
+   
 }
+
+var chartData = null;
 
 const getHistoricalData = () => {
     fetch("https://disease.sh/v3/covid-19/historical/all?lastdays=120")
     .then((response)=>{
         return response.json()
     }).then((data)=>{
-        let chartData = buildChartData(data);
+        chartData = buildChartData(data);
         buildChart(chartData);
-        
-    })
+    });
 }
 
 const buildChartData = (data) => {
     let chartData ={
         allCases: [],
         deaths: [],
-        recovered: []
+        recovered: [],
+        active: []
     }
     for(let date in data.cases){
         let newDataPoint = {
@@ -165,6 +169,13 @@ const buildChartData = (data) => {
         }
         chartData.recovered.push(newDataPoint);
     }
+    for(let date in data.cases){
+        let newDataPoint = {
+            x: date,
+            y: data.cases[date] - data.recovered[date] - data.deaths[date]
+        }
+        chartData.active.push(newDataPoint);
+    }
     console.log(chartData);
     return chartData;
 }
@@ -174,6 +185,50 @@ const buildChart = (chartData) => {
     console.log("All if good");
     var timeFormat = 'MM/DD/YY';
     var ctx = document.getElementById('myChart').getContext('2d');
+    var data = [
+        {
+            label: 'Total Cases',
+            backgroundColor: colors.allCases,
+            borderColor: colors.allCases,
+            data: chartData.allCases
+        },
+        {
+            label: 'Recovered Cases',
+            backgroundColor: colors.recoveredCases,
+            borderColor: colors.recoveredCases,
+            data: chartData.recovered
+        }, 
+        {
+            label: 'Death Cases',
+            backgroundColor: colors.deathsCases,
+            borderColor: colors.deathsCases,
+            data: chartData.deaths
+        },
+        {
+            label: 'Active Cases',
+            backgroundColor: colors.activeCases,
+            borderColor: colors.activeCases,
+            data: chartData.active
+        },
+    ]
+
+    var shownChart = () => {
+        if(mapState.cases === 'cases'){
+            return data[0];
+        }
+        else if(mapState.cases === 'recovered'){
+            return data[1];
+        }
+        else if(mapState.cases === 'deaths'){
+            return data[2];
+        }
+        else if(mapState.cases === 'active'){
+            return data[3];
+        }
+        
+    }
+
+
     var chart = new Chart(ctx, {
         // The type of chart we want to create
         type: 'line',
@@ -181,25 +236,7 @@ const buildChart = (chartData) => {
         // The data for our dataset
         data: {
             datasets: [
-            {
-                label: 'Death Cases',
-                backgroundColor: colors.deathsCases,
-                borderColor: colors.deathsCases,
-                data: chartData.deaths
-            },
-            {
-                label: 'Recovered Cases',
-                backgroundColor: colors.recoveredCases,
-                borderColor: colors.recoveredCases,
-                data: chartData.recovered
-            }, 
-            {
-                label: 'Total Cases',
-                backgroundColor: colors.allCases,
-                borderColor: colors.allCases,
-                data: chartData.allCases
-            }, 
-           
+                shownChart(),
             ]
         },
 
