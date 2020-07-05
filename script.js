@@ -44,6 +44,7 @@ const getCountryData = () => {
     })
 }
 
+
 const getWorldData = () => {
     fetch("https://disease.sh/v3/covid-19/all")
     .then((response)=>{
@@ -71,22 +72,26 @@ const getWorldData = () => {
             mapState = { color: colors.allCases , cases : 'cases'};
             cleanMap();
             showDataOnMap(countryData);
+            changeSelectedButton(totalCasesButton);
         }, false);
         activeCasesButton.addEventListener('click', function() {
             mapState = { color: colors.activeCases , cases : 'active'};
             cleanMap();
             showDataOnMap(countryData);
+            changeSelectedButton(activeCasesButton);
             
         }, false);
         recoverdCasesButton.addEventListener('click', function() {
             mapState = { color: colors.recoveredCases , cases : 'recovered'};
             cleanMap();
             showDataOnMap(countryData);
+            changeSelectedButton(recoverdCasesButton);
         }, false);
         deathCasesButton.addEventListener('click', function() {
             mapState = { color: colors.deathsCases , cases : 'deaths'};
             cleanMap();
             showDataOnMap(countryData);
+            changeSelectedButton(deathCasesButton);
         }, false);
         
     });
@@ -105,6 +110,21 @@ const getWorldData = () => {
     const setCommas = (number) => {
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
+}
+
+
+
+const changeSelectedButton = (element) => {
+    var cards = ['total-cases-card', 'active-cases-card', 'recovered-cases-card', 'death-cases-card'];
+
+    var cardlist = [];
+    cards.forEach((cardId) => {
+        cardlist.push(document.getElementById(cardId));
+    });
+    cardlist.forEach((cardElement) => {
+        cardElement.style.backgroundColor = "#EFF2F6";
+    });
+    element.style.backgroundColor = "grey";
 }
 
 const getHistoricalData = () => {
