@@ -8,6 +8,7 @@ import 'numeral';
 import 'moment';
 import 'chart.js';
 import 'font-awesome/css/font-awesome.css';
+import Map from './Map';
 
 class Main extends Component {
     constructor(props){
@@ -41,6 +42,7 @@ class Main extends Component {
                     <div class="col-8">
                         <Header />
                         <Tab worldData={this.state.worldData}/>
+                        <Map/>
                     </div>
                 </div>
             </div>

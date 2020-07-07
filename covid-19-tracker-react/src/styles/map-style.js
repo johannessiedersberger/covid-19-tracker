@@ -166,3 +166,5 @@ var mapStyle = [
     ]
   }
 ]
+
+export default mapStyle;
