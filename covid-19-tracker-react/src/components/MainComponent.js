@@ -8,7 +8,7 @@ import 'numeral';
 import 'moment';
 import 'chart.js';
 import 'font-awesome/css/font-awesome.css';
-import Map from './Map';
+import Map from './MapComponent';
 
 class Main extends Component {
     constructor(props){
