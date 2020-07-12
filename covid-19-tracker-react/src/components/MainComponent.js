@@ -10,6 +10,7 @@ import 'chart.js';
 import 'font-awesome/css/font-awesome.css';
 import Map from './MapComponent';
 import Stats from './StatsComponent';
+import ListTable from './ListTableComponent';
 
 class Main extends Component {
     constructor(props){
@@ -57,8 +58,9 @@ class Main extends Component {
                         <Header />
                         <Tab worldData={this.state.worldData}/>
                         <Map countryData={this.state.countryData}/>
-                        <Stats historicalData={this.state.historicalData} worldData={this.state.worldData}/>
+                        <Stats historicalData={this.state.historicalData} worldData={this.state.worldData}/>       
                     </div>
+                    <ListTable countryData={this.state.countryData}/>
                 </div>
             </div>
         );
