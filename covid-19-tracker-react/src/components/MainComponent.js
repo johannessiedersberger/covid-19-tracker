@@ -16,7 +16,7 @@ class Main extends Component {
         this.state = {
             isLoading: true,
             worldData: null,
-
+            countryData: null
         }
 
     }
@@ -26,7 +26,13 @@ class Main extends Component {
             .then((response) => {
                 return response.json()
             }).then((data) => {
-                this.setState({ worldData: data, isLoading: false });
+                this.setState({ worldData: data, isLoading: true });
+            });
+        fetch("https://disease.sh/v3/covid-19/countries")
+            .then((response)=>{
+                return response.json()
+            }).then((data)=>{
+                this.setState({countryData: data, isLoading: false})
             });
     }
 
@@ -42,7 +48,7 @@ class Main extends Component {
                     <div class="col-8">
                         <Header />
                         <Tab worldData={this.state.worldData}/>
-                        <Map/>
+                        <Map countryData={this.state.countryData}/>
                     </div>
                 </div>
             </div>
