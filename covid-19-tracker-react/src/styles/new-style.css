@@ -10,6 +10,7 @@
 
 .map-container {
     height: 500;
+
 }
 
 #map {
@@ -19,13 +20,13 @@
 
 .chart-container {
     height: 300px;
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: 15px;
 }
 
 .chart-container .col {
     background-color: #EFF2F6;
     border-radius: 12px;
+    margin-left: 12px;
 }
 
 .countries-container {

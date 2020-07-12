@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Chart from 'chart.js';
 import numeral from 'numeral';
+import '../styles/new-style.css';
+import '../styles/style.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class Stats extends Component{
     constructor(props){
