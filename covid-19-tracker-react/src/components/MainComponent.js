@@ -9,6 +9,7 @@ import 'moment';
 import 'chart.js';
 import 'font-awesome/css/font-awesome.css';
 import Map from './MapComponent';
+import Stats from './StatsComponent';
 
 class Main extends Component {
     constructor(props){
@@ -16,7 +17,8 @@ class Main extends Component {
         this.state = {
             isLoading: true,
             worldData: null,
-            countryData: null
+            countryData: null,
+            historicalData: null
         }
 
     }
@@ -32,7 +34,13 @@ class Main extends Component {
             .then((response)=>{
                 return response.json()
             }).then((data)=>{
-                this.setState({countryData: data, isLoading: false})
+                this.setState({countryData: data, isLoading: true});
+            });
+        fetch("https://disease.sh/v3/covid-19/historical/all?lastdays=120")
+            .then((response)=>{
+                return response.json()
+            }).then((data)=>{
+                this.setState({historicalData: data, isLoading: false});
             });
     }
 
@@ -49,6 +57,7 @@ class Main extends Component {
                         <Header />
                         <Tab worldData={this.state.worldData}/>
                         <Map countryData={this.state.countryData}/>
+                        <Stats historicalData={this.state.historicalData} worldData={this.state.worldData}/>
                     </div>
                 </div>
             </div>

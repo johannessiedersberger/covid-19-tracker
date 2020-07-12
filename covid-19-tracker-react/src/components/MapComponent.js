@@ -89,7 +89,6 @@ class Map extends Component{
                                 zoom={3}
                                 
                                 onLoad={map => {
-                                    console.log(map);
                                     map.setOptions({styles: mapStyle});
                                     showDataOnMap(this.props.countryData, map);
                                 }}
