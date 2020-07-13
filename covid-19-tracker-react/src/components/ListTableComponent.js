@@ -8,7 +8,22 @@ class ListTable extends Component{
     }
 
     componentDidMount(){
-        showDataInTable(this.props.countryData,this.countryTableRef.current);
+        this.showDataInTable(this.props.countryData,this.countryTableRef.current);
+    }
+
+    showDataInTable = (data, countryTableRef) => {
+        var html = '';
+        data.forEach((country)=>{
+            html += `
+            <tr>
+                <td>${country.country}</td>
+                <td>${country.cases}</td>
+                <td>${country.recovered}</td>
+                <td>${country.deaths}</td>
+            </tr>
+            `
+        })
+        countryTableRef.innerHTML = html;
     }
 
     render(){
@@ -38,19 +53,6 @@ class ListTable extends Component{
     }
 }
 
-const showDataInTable = (data, countryTableRef) => {
-    var html = '';
-    data.forEach((country)=>{
-        html += `
-        <tr>
-            <td>${country.country}</td>
-            <td>${country.cases}</td>
-            <td>${country.recovered}</td>
-            <td>${country.deaths}</td>
-        </tr>
-        `
-    })
-    countryTableRef.innerHTML = html;
-}
+
 
 export default ListTable;

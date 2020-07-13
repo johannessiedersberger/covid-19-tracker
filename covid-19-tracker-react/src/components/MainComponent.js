@@ -25,18 +25,30 @@ class Main extends Component {
     }
 
     componentDidMount() {
+       this.loadWorldData();
+       this.loadCountryData();
+       this.loadHistoricalData();
+    }
+
+    loadWorldData(){
         fetch("https://disease.sh/v3/covid-19/all")
-            .then((response) => {
-                return response.json()
-            }).then((data) => {
-                this.setState({ worldData: data, isLoading: true });
-            });
+        .then((response) => {
+            return response.json()
+        }).then((data) => {
+            this.setState({ worldData: data, isLoading: true });
+        });
+    }
+
+    loadCountryData(){
         fetch("https://disease.sh/v3/covid-19/countries")
-            .then((response)=>{
-                return response.json()
-            }).then((data)=>{
-                this.setState({countryData: data, isLoading: true});
-            });
+        .then((response)=>{
+            return response.json()
+        }).then((data)=>{
+            this.setState({countryData: data, isLoading: true});
+        });
+    }
+
+    loadHistoricalData(){
         fetch("https://disease.sh/v3/covid-19/historical/all?lastdays=120")
             .then((response)=>{
                 return response.json()
