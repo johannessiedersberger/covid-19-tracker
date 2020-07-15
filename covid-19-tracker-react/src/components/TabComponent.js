@@ -58,15 +58,19 @@ class Tab extends Component{
     placeEvents(){
         this.state.tabRefs.allCasesRef.current.addEventListener('click', () => {
           this.changeSelectedButton(this.state.tabRefs.allCasesRef);
+          this.props.caseTypeChanged('cases');
         }, false);
         this.state.tabRefs.activeCasesRef.current.addEventListener('click', () => {
             this.changeSelectedButton(this.state.tabRefs.activeCasesRef);
+            this.props.caseTypeChanged('active');
          }, false);
          this.state.tabRefs.recoveredCasesRef.current.addEventListener('click', () => {
             this.changeSelectedButton(this.state.tabRefs.recoveredCasesRef);
+            this.props.caseTypeChanged('recovered');
          }, false);
          this.state.tabRefs.deathsCasesRef.current.addEventListener('click', () => {
             this.changeSelectedButton(this.state.tabRefs.deathsCasesRef);
+            this.props.caseTypeChanged('deaths');
          }, false);
     }
 

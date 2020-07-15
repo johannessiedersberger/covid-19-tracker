@@ -21,6 +21,7 @@ class Main extends Component {
             countryData: null,
             historicalData: null
         }
+        this.mapComponent = React.createRef();
 
     }
 
@@ -57,6 +58,11 @@ class Main extends Component {
             });
     }
 
+    caseTypeChanged(caseType){
+        console.log(caseType);
+        this.mapComponent.current.changeSelectedCaseType(caseType);
+    }
+
     render(){
  
     if (this.state.isLoading) {
@@ -64,12 +70,12 @@ class Main extends Component {
     }
 
         return (
-            <div class="container-fluid main">
-                <div class="row">
-                    <div class="col-8">
+            <div className="container-fluid main">
+                <div className="row">
+                    <div className="col-8">
                         <Header />
-                        <Tab worldData={this.state.worldData}/>
-                        <Map countryData={this.state.countryData}/>
+                        <Tab worldData={this.state.worldData} caseTypeChanged={(caseType) => this.caseTypeChanged(caseType)}/>
+                        <Map countryData={this.state.countryData} ref={this.mapComponent}/>
                         <Stats historicalData={this.state.historicalData} worldData={this.state.worldData}/>       
                     </div>
                     <ListTable countryData={this.state.countryData}/>

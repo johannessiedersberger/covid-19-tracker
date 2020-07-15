@@ -3,23 +3,49 @@ import React, {Component, useState, useEffect} from 'react';
 import mapStyle from '../styles/map-style';
 import '../styles/new-style.css';
 import '../styles/style.css';
-import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, Circle, InfoWindow } from '@react-google-maps/api';
+
 
 class Map extends Component{
     constructor(props){
         super(props);
         this.state = {
             colors: {
-                    allCases: '#1d2c4d',
-                    activeCases : '#FF0000',
-                    recoveredCases: '#25b840',
-                    deathsCases: '#020d1f'
-                }
+                    cases: '#1d2c4d',
+                    active : '#FF0000',
+                    recovered: '#25b840',
+                    deaths: '#020d1f'
+            },
+            mapstate: {
+                data: this.props.countryData,
+                caseType: 'cases', 
+                map: null
+            }
         }
+        this.circles = []
+        this.googleMap = React.createRef();
     }
-     
+
+    changeSelectedCaseType(caseType){
+        this.cleanMap();
+        console.log(caseType);
+        this.setState({mapstate: { data: this.props.countryData, caseType: caseType }});
+        if(this.state.mapstate.map !== null){
+            //this.showDataOnMap(this.state.mapstate.data, this.state.mapstate.map);
+        }
+    }     
+
+    cleanMap = () => {
+        if(this.circles === null)
+            return;
+
+        this.circles.forEach((circle => {
+            circle.setMap(null);
+        }));
+    }
 
     showDataOnMap = (data, map) => {
+        console.log('data');
         data.map((country)=>{
             let countryCenter = {
                 lat: country.countryInfo.lat,
@@ -27,8 +53,8 @@ class Map extends Component{
             }
     
             var values = {
-                color: '#1d2c4d',
-                cases: country['cases']
+                color: this.state.colors[this.state.mapstate.caseType],
+                cases: country[this.state.mapstate.caseType]
             }
             
             var countryCircle = new window.google.maps.Circle({
@@ -42,7 +68,7 @@ class Map extends Component{
                 radius: values.cases
             });
     
-            //circles.push(countryCircle);
+            this.circles.push(countryCircle);
     
             var html = `
                 <div class="info-container">
@@ -86,7 +112,7 @@ class Map extends Component{
                         <LoadScript
                             googleMapsApiKey="AIzaSyB83A6z6v1LdZgGVLUk47Kpu8j4DrzgqYU"
                         >
-                            <GoogleMap
+                            <GoogleMap ref={this.googleMap}
                                 mapContainerStyle={ {
                                     width: '100%',
                                     height: '400px'
@@ -96,11 +122,45 @@ class Map extends Component{
                                 
                                 onLoad={map => {
                                     map.setOptions({styles: mapStyle});
-                                    this.showDataOnMap(this.props.countryData, map);
+                                    //this.showDataOnMap(this.state.mapstate.data, map);
+                                    this.setState({mapstate:{map: map}});
                                 }}
                                 
+                                
                             >
-                                { /* Child components, such as markers, info windows, etc. */}
+                                {this.props.countryData.map((country)=>{
+                                        let countryCenter = {
+                                            lat: country.countryInfo.lat,
+                                            lng: country.countryInfo.long
+                                        }
+                                
+                                        var values = {
+                                            color: this.state.colors[this.state.mapstate.caseType],
+                                            cases: country[this.state.mapstate.caseType]
+                                        }
+                                        console.log(values.color);
+                                    return (
+                                                <Circle
+                                                options={{
+                                                    fillColor:values.color, 
+                                                    strokeColor:values.color, 
+                                                    fillOpacity: 0.35, 
+                                                    strokeWeight:2, 
+                                                    strokeOpacity: 0.8
+                                                }}
+                                               
+                                                center={countryCenter}
+                                                radius={values.cases}
+                                                onMouseOver = {
+                                                    () => {
+                                                        
+                                                    }
+                                                }
+                                                />
+                                            
+                                   
+                                    
+                                    )})}
                                 <></>
                             </GoogleMap>
                         </LoadScript>
