@@ -4,6 +4,7 @@ import mapStyle from '../styles/map-style';
 import '../styles/new-style.css';
 import '../styles/style.css';
 import { GoogleMap, LoadScript, Circle, InfoWindow } from '@react-google-maps/api';
+import CircleComponent from './CircleComponent';
 
 
 class Map extends Component{
@@ -45,6 +46,8 @@ class Map extends Component{
     }
 
     showDataOnMap = (data, map) => {
+       
+
         console.log('data');
         data.map((country)=>{
             let countryCenter = {
@@ -122,13 +125,16 @@ class Map extends Component{
                                 
                                 onLoad={map => {
                                     map.setOptions({styles: mapStyle});
-                                    //this.showDataOnMap(this.state.mapstate.data, map);
+                                    this.showDataOnMap(this.state.mapstate.data, map);
                                     this.setState({mapstate:{map: map}});
                                 }}
                                 
                                 
                             >
-                                {this.props.countryData.map((country)=>{
+                                {
+                                    
+                                      
+                                        this.props.countryData.map((country)=>{
                                         let countryCenter = {
                                             lat: country.countryInfo.lat,
                                             lng: country.countryInfo.long
@@ -139,28 +145,47 @@ class Map extends Component{
                                             cases: country[this.state.mapstate.caseType]
                                         }
                                         console.log(values.color);
+
+                                        var html = `
+                                        <div class="info-container">
+                                            <div class="info-flag" style="background-image: url(${country.countryInfo.flag});">
+                                            </div>
+                                            <div class="info-name">
+                                                ${country.country}
+                                            </div>
+                                            <div class="info-confirmed">
+                                                Total: ${country.cases}
+                                            </div>
+                                            <div class="info-recovered">
+                                                Recovered: ${country.recovered}
+                                            </div>
+                                            <div class="info-deaths">   
+                                                Deaths: ${country.deaths}
+                                            </div>
+                                        </div>
+                                    `
+
+                                        // var infoWindow = new window.google.maps.InfoWindow({
+                                        //     content: html,
+                                        //     position: countryCircle.center
+                                        // });
+                                        // window.google.maps.event.addListener(countryCircle, 'mouseover', function() {
+                                        //     infoWindow.open(map);
+                                        // });
+                                
+                                        // window.google.maps.event.addListener(countryCircle, 'mouseout', function(){
+                                        //     infoWindow.close();
+                                        // });
+
+
+                                        
                                     return (
-                                                <Circle
-                                                options={{
-                                                    fillColor:values.color, 
-                                                    strokeColor:values.color, 
-                                                    fillOpacity: 0.35, 
-                                                    strokeWeight:2, 
-                                                    strokeOpacity: 0.8
-                                                }}
-                                               
-                                                center={countryCenter}
-                                                radius={values.cases}
-                                                onMouseOver = {
-                                                    () => {
-                                                        
-                                                    }
-                                                }
-                                                />
+                                        
+                                                <CircleComponent countryCenter={countryCenter} values={values}/>
                                             
                                    
-                                    
-                                    )})}
+                                    )})
+                                }
                                 <></>
                             </GoogleMap>
                         </LoadScript>
