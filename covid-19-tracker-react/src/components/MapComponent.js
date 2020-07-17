@@ -33,94 +33,7 @@ class Map extends Component{
         this.setState({mapstate: { data: this.props.countryData, caseType: caseType }});
     }     
 
-    cleanMap = () => {
-        if(this.circles === null)
-            return;
-
-        this.circles.forEach((circle => {
-            circle.setMap(null);
-        }));
-    }
-
-    showDataOnMap = (data, map) => {
-       
-
-        console.log('data');
-        data.map((country)=>{
-            let countryCenter = {
-                lat: country.countryInfo.lat,
-                lng: country.countryInfo.long
-            }
     
-            var values = {
-                color: this.state.colors[this.state.mapstate.caseType],
-                cases: country[this.state.mapstate.caseType]
-            }
-            
-            var countryCircle = new window.google.maps.Circle({
-                strokeColor: values.color,
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: values.color,
-                fillOpacity: 0.35,
-                map: map,
-                center: countryCenter,
-                radius: values.cases
-            });
-    
-            this.circles.push(countryCircle);
-    
-            var html = `
-                <div class="info-container">
-                    <div class="info-flag" style="background-image: url(${country.countryInfo.flag});">
-                    </div>
-                    <div class="info-name">
-                        ${country.country}
-                    </div>
-                    <div class="info-confirmed">
-                        Total: ${country.cases}
-                    </div>
-                    <div class="info-recovered">
-                        Recovered: ${country.recovered}
-                    </div>
-                    <div class="info-deaths">   
-                        Deaths: ${country.deaths}
-                    </div>
-                </div>
-            `
-    
-            var infoWindow = new window.google.maps.InfoWindow({
-                content: html,
-                position: countryCircle.center
-            });
-            window.google.maps.event.addListener(countryCircle, 'mouseover', function() {
-                infoWindow.open(map);
-            });
-    
-            window.google.maps.event.addListener(countryCircle, 'mouseout', function(){
-                infoWindow.close();
-            });
-    
-        })
-    };
-
-
-    placeCircles(country){
-       
-            let countryCenter = {
-                lat: country.countryInfo.lat,
-                lng: country.countryInfo.long
-            }
-           
-            var values = {
-                color: this.state.colors[this.state.mapstate.caseType],
-                cases: country[this.state.mapstate.caseType]
-            }
-
-        return (
-            <CircleComponent countryCenter={countryCenter} values={values} country={country}/>
-        );
-    }
 
     render(){
         return(
@@ -141,16 +54,18 @@ class Map extends Component{
                                 onLoad={map => {
                                     map.setOptions({styles: mapStyle});
                                     this.props.countryData.map((country)=>{
-                                        let countryCenter = {
-                                            lat: country.countryInfo.lat,
-                                            lng: country.countryInfo.long
-                                        }
                                        
-                                        var values = {
-                                            color: this.state.colors[this.state.mapstate.caseType],
-                                            cases: country[this.state.mapstate.caseType]
-                                        }
-                            
+                                    
+                                    let countryCenter = {
+                                        lat: country.countryInfo.lat,
+                                        lng: country.countryInfo.long
+                                    }
+                                
+                                    var values = {
+                                        color: this.state.colors[this.state.mapstate.caseType],
+                                        cases: country[this.state.mapstate.caseType]
+                                    }
+
                                     return (
                                         <CircleComponent countryCenter={countryCenter} values={values} country={country}/>
                                     );
