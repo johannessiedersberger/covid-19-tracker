@@ -146,24 +146,7 @@ class Map extends Component{
                                         }
                                         console.log(values.color);
 
-                                        var html = `
-                                        <div class="info-container">
-                                            <div class="info-flag" style="background-image: url(${country.countryInfo.flag});">
-                                            </div>
-                                            <div class="info-name">
-                                                ${country.country}
-                                            </div>
-                                            <div class="info-confirmed">
-                                                Total: ${country.cases}
-                                            </div>
-                                            <div class="info-recovered">
-                                                Recovered: ${country.recovered}
-                                            </div>
-                                            <div class="info-deaths">   
-                                                Deaths: ${country.deaths}
-                                            </div>
-                                        </div>
-                                    `
+                                       
 
                                         // var infoWindow = new window.google.maps.InfoWindow({
                                         //     content: html,
@@ -181,8 +164,8 @@ class Map extends Component{
                                         
                                     return (
                                         
-                                                <CircleComponent countryCenter={countryCenter} values={values}/>
-                                            
+                                                <CircleComponent countryCenter={countryCenter} values={values} country={country}/>
+                                                
                                    
                                     )})
                                 }

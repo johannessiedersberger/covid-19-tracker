@@ -49,12 +49,28 @@ class CircleComponent extends Component {
     
             
     
-    
+                {/* ///style="background-image: url(${country.countryInfo.flag});" */}
             </Circle>
             {
                 this.state.isOpen &&
                 <InfoWindow position={this.props.countryCenter}   onCloseClick={() => this.setState({isOpen: false})}>
-                <span>balblabla</span>
+                        <div class="info-container">
+                            <div class="info-flag" style={{backgroundImage:  "url(" + this.props.country.countryInfo.flag + ")"}}>
+                            </div>
+                            <div class="info-name">
+                                {this.props.country.country}
+                            </div>
+                            <div class="info-confirmed">
+                                Total: {this.props.country.cases}
+                            </div>
+                            <div class="info-recovered">
+                                Recovered: {this.props.country.recovered}
+                            </div>
+                            <div class="info-deaths">
+                                Deaths: {this.props.country.deaths}
+                            </div>
+                        </div>
+                                    
                 </InfoWindow>
             }
              
