@@ -44,12 +44,11 @@ class CircleComponent extends Component {
                 //key={this.props.index}
                 //position={{ lat: this.props.lat, lng: this.props.lng}}
                 label={"blala"}
-                onClick={() => this.handleToggleOpen()}
+                //onClick={() => this.handleToggleOpen()}
+                onMouseOver={() => this.handleToggleOpen()}
+                onMouseOut={() => this.handleToggleClose()}
             >
     
-            
-    
-                {/* ///style="background-image: url(${country.countryInfo.flag});" */}
             </Circle>
             {
                 this.state.isOpen &&
