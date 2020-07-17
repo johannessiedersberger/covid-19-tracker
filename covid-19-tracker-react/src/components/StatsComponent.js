@@ -21,11 +21,11 @@ class Stats extends Component{
 
     render(){
         return(
-            <div class="row chart-container mt-3">
-                <div class="col col-6 linear-chart mr-3">
+            <div className="row chart-container mt-3">
+                <div className="col col-6 linear-chart mr-3">
                     <canvas id="myChart" ref={this.myRef}></canvas>
                 </div>
-                <div class="col col-5 linear-chart mr-3">
+                <div className="col col-5 linear-chart mr-3">
                     <canvas id="pieChart" ref={this.pieChartRef}></canvas>
                 </div>
             </div>

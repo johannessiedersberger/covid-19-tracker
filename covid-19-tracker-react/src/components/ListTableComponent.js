@@ -28,8 +28,8 @@ class ListTable extends Component{
 
     render(){
         return (
-            <div class="col-4 countries-container mt-3 my-custom-scrollbar table-wrapper-scroll-y">
-                <table class="table">
+            <div className="col-4 countries-container mt-3 my-custom-scrollbar table-wrapper-scroll-y">
+                <table className="table">
                     <thead>
                         <tr>
                             <th scope="col">Country</th>

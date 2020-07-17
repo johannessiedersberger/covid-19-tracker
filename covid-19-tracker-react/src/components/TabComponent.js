@@ -84,36 +84,36 @@ class Tab extends Component{
 
     render(){
         return(
-            <div class="row stats-container">
-                <div class="col">
-                    <div class="card" ref={this.state.tabRefs.allCasesRef}>
-                        <div class="card-body">
-                            <h5 class="card-title">Total Cases</h5>
-                            <h6 class="card-subtitle mb-2 text-muted" ref={this.state.tabCasesRefs.allCasesRef}></h6>
+            <div className="row stats-container">
+                <div className="col">
+                    <div className="card" ref={this.state.tabRefs.allCasesRef}>
+                        <div className="card-body">
+                            <h5 className="card-title">Total Cases</h5>
+                            <h6 className="card-subtitle mb-2 text-muted" ref={this.state.tabCasesRefs.allCasesRef}></h6>
                         </div>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="card" ref={this.state.tabRefs.activeCasesRef}>
-                        <div class="card-body">
-                            <h5 class="card-title">Active Cases</h5>
-                            <h6 class="card-subtitle mb-2 text-muted" ref={this.state.tabCasesRefs.activeCasesRef}></h6>
+                <div className="col">
+                    <div className="card" ref={this.state.tabRefs.activeCasesRef}>
+                        <div className="card-body">
+                            <h5 className="card-title">Active Cases</h5>
+                            <h6 className="card-subtitle mb-2 text-muted" ref={this.state.tabCasesRefs.activeCasesRef}></h6>
                         </div>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="card" ref={this.state.tabRefs.recoveredCasesRef}>
-                        <div class="card-body">
-                            <h5 class="card-title">Recovered</h5>
-                            <h6 class="card-subtitle mb-2 text-muted " ref={this.state.tabCasesRefs.recoveredCasesRef}></h6>
+                <div className="col">
+                    <div className="card" ref={this.state.tabRefs.recoveredCasesRef}>
+                        <div className="card-body">
+                            <h5 className="card-title">Recovered</h5>
+                            <h6 className="card-subtitle mb-2 text-muted " ref={this.state.tabCasesRefs.recoveredCasesRef}></h6>
                         </div>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="card" ref={this.state.tabRefs.deathsCasesRef}>
-                        <div class="card-body">
-                            <h5 class="card-title">Deaths</h5>
-                            <h6 class="card-subtitle mb-2 text-muted " ref={this.state.tabCasesRefs.deathsCasesRef}></h6>
+                <div className="col">
+                    <div className="card" ref={this.state.tabRefs.deathsCasesRef}>
+                        <div className="card-body">
+                            <h5 className="card-title">Deaths</h5>
+                            <h6 className="card-subtitle mb-2 text-muted " ref={this.state.tabCasesRefs.deathsCasesRef}></h6>
                         </div>
                     </div>
                 </div>

@@ -9,17 +9,17 @@ class Header extends Component{
     render(){
         return(
             
-            <div class="row header-container">
-                <div class="col title-container">
+            <div className="row header-container">
+                <div className="col title-container">
                     <h1>Covid-19</h1>
                     <h4>Coronavirus</h4>
                 </div>
-                <div class="col search-container">
-                    <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></span>
+                <div className="col search-container">
+                    <div className="input-group">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Search Location" aria-label="Search Location" aria-describedby="basic-addon1"></input>
+                    <input type="text" className="form-control" placeholder="Search Location" aria-label="Search Location" aria-describedby="basic-addon1"></input>
                     </div>
                 </div>
             </div>

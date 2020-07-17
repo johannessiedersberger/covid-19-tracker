@@ -31,9 +31,6 @@ class Map extends Component{
         this.cleanMap();
         console.log(caseType);
         this.setState({mapstate: { data: this.props.countryData, caseType: caseType }});
-        if(this.state.mapstate.map !== null){
-            //this.showDataOnMap(this.state.mapstate.data, this.state.mapstate.map);
-        }
     }     
 
     cleanMap = () => {
@@ -107,6 +104,24 @@ class Map extends Component{
         })
     };
 
+
+    placeCircles(country){
+       
+            let countryCenter = {
+                lat: country.countryInfo.lat,
+                lng: country.countryInfo.long
+            }
+           
+            var values = {
+                color: this.state.colors[this.state.mapstate.caseType],
+                cases: country[this.state.mapstate.caseType]
+            }
+
+        return (
+            <CircleComponent countryCenter={countryCenter} values={values} country={country}/>
+        );
+    }
+
     render(){
         return(
             <div class="row map-container mt-3">
@@ -125,49 +140,43 @@ class Map extends Component{
                                 
                                 onLoad={map => {
                                     map.setOptions({styles: mapStyle});
-                                    this.showDataOnMap(this.state.mapstate.data, map);
-                                    this.setState({mapstate:{map: map}});
+                                    this.props.countryData.map((country)=>{
+                                        let countryCenter = {
+                                            lat: country.countryInfo.lat,
+                                            lng: country.countryInfo.long
+                                        }
+                                       
+                                        var values = {
+                                            color: this.state.colors[this.state.mapstate.caseType],
+                                            cases: country[this.state.mapstate.caseType]
+                                        }
+                            
+                                    return (
+                                        <CircleComponent countryCenter={countryCenter} values={values} country={country}/>
+                                    );
+                                    })
+                                    
                                 }}
                                 
                                 
                             >
                                 {
-                                    
-                                      
-                                        this.props.countryData.map((country)=>{
+                                     this.props.countryData.map((country)=>{
                                         let countryCenter = {
                                             lat: country.countryInfo.lat,
                                             lng: country.countryInfo.long
                                         }
-                                
+                                       
                                         var values = {
                                             color: this.state.colors[this.state.mapstate.caseType],
                                             cases: country[this.state.mapstate.caseType]
                                         }
-                                        console.log(values.color);
-
-                                       
-
-                                        // var infoWindow = new window.google.maps.InfoWindow({
-                                        //     content: html,
-                                        //     position: countryCircle.center
-                                        // });
-                                        // window.google.maps.event.addListener(countryCircle, 'mouseover', function() {
-                                        //     infoWindow.open(map);
-                                        // });
-                                
-                                        // window.google.maps.event.addListener(countryCircle, 'mouseout', function(){
-                                        //     infoWindow.close();
-                                        // });
-
-
-                                        
+                            
                                     return (
+                                        <CircleComponent countryCenter={countryCenter} values={values} country={country}/>
+                                    );
+                                     })
                                         
-                                                <CircleComponent countryCenter={countryCenter} values={values} country={country}/>
-                                                
-                                   
-                                    )})
                                 }
                                 <></>
                             </GoogleMap>
