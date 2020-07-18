@@ -9,7 +9,7 @@
 }
 
 .map-container {
-    height: 500;
+    height: 600px;
 
 }
 
@@ -19,7 +19,7 @@
 }
 
 .chart-container {
-    height: 300px;
+    height: 40vh;
     margin-left: 15px;
 }
 
@@ -67,7 +67,7 @@
 
 .my-custom-scrollbar {
     position: relative;
-    height: 95vh;
+    height: 50vh;
     overflow: auto;
     }
 .table-wrapper-scroll-y {

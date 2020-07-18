@@ -16,18 +16,16 @@ class Stats extends Component{
     componentDidMount(){
         var chartdata = buildChartData(this.props.historicalData);
         buildChart(chartdata, this.myRef.current);
-        buildPieChart(this.props.worldData,this.pieChartRef.current );
+        //buildPieChart(this.props.worldData,this.pieChartRef.current );
     }
 
     render(){
         return(
             <div className="row chart-container mt-3">
-                <div className="col col-6 linear-chart mr-3">
+                <div className="col  linear-chart mr-3">
                     <canvas id="myChart" ref={this.myRef}></canvas>
                 </div>
-                <div className="col col-5 linear-chart mr-3">
-                    <canvas id="pieChart" ref={this.pieChartRef}></canvas>
-                </div>
+                
             </div>
         );
     }

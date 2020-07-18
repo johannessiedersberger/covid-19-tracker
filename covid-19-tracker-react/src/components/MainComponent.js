@@ -80,10 +80,12 @@ class Main extends Component {
                     <div className="col-8">
                         <Header countryData={this.state.countryData} selectedCountryChanged={(selectedCountry) => this.selectedCountryChanged(selectedCountry)}/>
                         <Tab worldData={this.state.worldData} caseTypeChanged={(caseType) => this.caseTypeChanged(caseType)}/>
-                        <Map countryData={this.state.countryData} ref={this.mapComponent}/>
-                        <Stats historicalData={this.state.historicalData} worldData={this.state.worldData}/>       
+                        <Map countryData={this.state.countryData} ref={this.mapComponent}/>           
                     </div>
-                    <ListTable countryData={this.state.countryData}/>
+                    <div className="col-4">
+                        <ListTable countryData={this.state.countryData}/>
+                        <Stats historicalData={this.state.historicalData} worldData={this.state.worldData}/>  
+                    </div>
                 </div>
             </div>
         );

@@ -49,7 +49,7 @@ class Map extends Component{
                             <GoogleMap ref={this.googleMap}
                                 mapContainerStyle={ {
                                     width: '100%',
-                                    height: '400px'
+                                    height: '70vh'
                                     }}
                                 center={this.state.mapstate.center}
                                 zoom={3}

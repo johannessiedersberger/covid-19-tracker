@@ -13,16 +13,16 @@ import 'semantic-ui-css/semantic.min.css';
         this.props.countryData.map(
             (country) => {
 
-                    var iso = country.countryInfo.iso2;
-                    if(iso !== null){
-                        iso = iso.toLowerCase();
+                    var countryLetters = country.countryInfo.iso2;
+                    if(countryLetters !== null){
+                        countryLetters = countryLetters.toLowerCase();
                     }
 
                     countryOptions.push(
                         {
                             key: country.country,
                             value: country.country,
-                            flag: iso,
+                            flag: countryLetters,
                             text: country.country
                         }
                     )
