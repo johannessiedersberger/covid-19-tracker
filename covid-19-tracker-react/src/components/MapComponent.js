@@ -28,8 +28,6 @@ class Map extends Component{
     }
 
     changeSelectedCaseType(caseType){
-        this.cleanMap();
-        console.log(caseType);
         this.setState({mapstate: { data: this.props.countryData, caseType: caseType }});
     }     
 
@@ -69,7 +67,7 @@ class Map extends Component{
                                     return (
                                         <CircleComponent countryCenter={countryCenter} values={values} country={country}/>
                                     );
-                                    })
+                                    });
                                     
                                 }}
                                 
@@ -88,9 +86,9 @@ class Map extends Component{
                                         }
                             
                                     return (
-                                        <CircleComponent countryCenter={countryCenter} values={values} country={country}/>
+                                        <CircleComponent key={country.country} countryCenter={countryCenter} values={values} country={country}/>
                                     );
-                                     })
+                                    })
                                         
                                 }
                                 <></>

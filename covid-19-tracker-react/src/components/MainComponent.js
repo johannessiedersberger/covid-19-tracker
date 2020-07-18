@@ -26,6 +26,7 @@ class Main extends Component {
     }
 
     componentDidMount() {
+        
        this.loadWorldData();
        this.loadCountryData();
        this.loadHistoricalData();
@@ -73,7 +74,7 @@ class Main extends Component {
             <div className="container-fluid main">
                 <div className="row">
                     <div className="col-8">
-                        <Header />
+                        <Header countryData={this.state.countryData} />
                         <Tab worldData={this.state.worldData} caseTypeChanged={(caseType) => this.caseTypeChanged(caseType)}/>
                         <Map countryData={this.state.countryData} ref={this.mapComponent}/>
                         <Stats historicalData={this.state.historicalData} worldData={this.state.worldData}/>       
