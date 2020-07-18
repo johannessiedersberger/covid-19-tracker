@@ -8,25 +8,19 @@
     align-items: center;
 }
 
-.map-container {
-    height: 600px;
 
-}
-
-#map {
-    border-radius: 12px;
-    overflow: hidden;
-}
 
 .chart-container {
     height: 40vh;
     margin-left: 15px;
+    
 }
 
 .chart-container .col {
     background-color: #EFF2F6;
     border-radius: 12px;
     margin-left: 12px;
+    box-shadow: 0 0 8px -4px rgba(0,0,0, 0.5);
 }
 
 .countries-container {
@@ -52,7 +46,7 @@
 .stats-container .card {    
     background-color: #EFF2F6;
     border-radius: 12px;
-
+    box-shadow: 0 0 8px -4px rgba(0,0,0, 0.5);
 }
 
 .stats-container .card-body {
@@ -63,12 +57,14 @@
     background: lightblue;
     border-radius: 12px;
     cursor: pointer;
+    
 }
 
 .my-custom-scrollbar {
     position: relative;
     height: 50vh;
     overflow: auto;
+    box-shadow: 0 0 8px -4px rgba(0,0,0, 0.5);
     }
 .table-wrapper-scroll-y {
     display: block;
