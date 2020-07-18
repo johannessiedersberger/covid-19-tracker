@@ -64,6 +64,10 @@ class Main extends Component {
         this.mapComponent.current.changeSelectedCaseType(caseType);
     }
 
+    selectedCountryChanged(selectedCountry){
+        this.mapComponent.current.setMapCenter(selectedCountry.lat, selectedCountry.long);
+    }
+
     render(){
  
     if (this.state.isLoading) {
@@ -74,7 +78,7 @@ class Main extends Component {
             <div className="container-fluid main">
                 <div className="row">
                     <div className="col-8">
-                        <Header countryData={this.state.countryData} />
+                        <Header countryData={this.state.countryData} selectedCountryChanged={(selectedCountry) => this.selectedCountryChanged(selectedCountry)}/>
                         <Tab worldData={this.state.worldData} caseTypeChanged={(caseType) => this.caseTypeChanged(caseType)}/>
                         <Map countryData={this.state.countryData} ref={this.mapComponent}/>
                         <Stats historicalData={this.state.historicalData} worldData={this.state.worldData}/>       

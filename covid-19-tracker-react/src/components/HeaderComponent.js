@@ -17,7 +17,7 @@ class Header extends Component{
                     <h4>Coronavirus</h4>
                 </div>
                 <div className="col search-container">
-                    <DropdownList countryData={this.props.countryData}/>
+                    <DropdownList countryData={this.props.countryData} selectedCountryChanged={(selectedCountry) => this.props.selectedCountryChanged(selectedCountry) }/>
                 </div>
             </div>
         );

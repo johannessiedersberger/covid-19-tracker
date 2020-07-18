@@ -20,7 +20,8 @@ class Map extends Component{
             mapstate: {
                 data: this.props.countryData,
                 caseType: 'cases', 
-                map: null
+                map: null,
+                center: {lat: 39.8283, lng: -98.5795}
             }
         }
         this.circles = []
@@ -31,6 +32,10 @@ class Map extends Component{
         this.setState({mapstate: { data: this.props.countryData, caseType: caseType }});
     }     
 
+    setMapCenter(lat, long){
+        console.log(lat, long);
+        this.setState({mapstate : { center: {lat: lat, lng: long}, caseType: this.state.mapstate.caseType}});
+    }
     
 
     render(){
@@ -46,7 +51,7 @@ class Map extends Component{
                                     width: '100%',
                                     height: '400px'
                                     }}
-                                center={{lat: 39.8283, lng: -98.5795}}
+                                center={this.state.mapstate.center}
                                 zoom={3}
                                 
                                 onLoad={map => {
