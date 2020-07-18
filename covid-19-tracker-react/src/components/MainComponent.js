@@ -22,7 +22,7 @@ class Main extends Component {
             historicalData: null
         }
         this.mapComponent = React.createRef();
-
+        this.statsComponent = React.createRef();
     }
 
     componentDidMount() {
@@ -62,6 +62,7 @@ class Main extends Component {
     caseTypeChanged(caseType){
         console.log(caseType);
         this.mapComponent.current.changeSelectedCaseType(caseType);
+        this.statsComponent.current.changeSelectedCaseType(caseType);
     }
 
     selectedCountryChanged(selectedCountry){
@@ -84,7 +85,7 @@ class Main extends Component {
                     </div>
                     <div className="col-4">
                         <ListTable countryData={this.state.countryData}/>
-                        <Stats historicalData={this.state.historicalData} worldData={this.state.worldData}/>  
+                        <Stats historicalData={this.state.historicalData} worldData={this.state.worldData} ref={this.statsComponent}/>  
                     </div>
                 </div>
             </div>

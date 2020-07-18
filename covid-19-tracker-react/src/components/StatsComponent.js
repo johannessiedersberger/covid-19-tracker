@@ -10,13 +10,21 @@ class Stats extends Component{
         super(props);
         this.myRef = React.createRef();
         this.pieChartRef = React.createRef();
+        
     }
+
+
 
 
     componentDidMount(){
         var chartdata = buildChartData(this.props.historicalData);
-        buildChart(chartdata, this.myRef.current);
+        buildChart(chartdata, this.myRef.current, 'cases');
         //buildPieChart(this.props.worldData,this.pieChartRef.current );
+    }
+
+    changeSelectedCaseType(caseType){
+        var chartdata = buildChartData(this.props.historicalData);
+        buildChart(chartdata, this.myRef.current, caseType);
     }
 
     render(){
@@ -78,40 +86,40 @@ const buildChartData = (data) => {
 }
 
 
-const buildChart = (chartData, chartRef) => {
+const buildChart = (chartData, chartRef, caseType) => {
     console.log("All if good");
     var timeFormat = 'MM/DD/YY';
     console.log(chartRef);
     var ctx = chartRef.getContext('2d');
-    var data = [
-        {
+    var data = {
+        cases: {
             label: 'Total Cases',
             backgroundColor: colors.allCases,
             borderColor: colors.allCases,
             data: chartData.allCases
         },
-        {
+        recovered: {
             label: 'Recovered Cases',
             backgroundColor: colors.recoveredCases,
             borderColor: colors.recoveredCases,
             data: chartData.recovered
         }, 
-        {
+        deaths: {
             label: 'Death Cases',
             backgroundColor: colors.deathsCases,
             borderColor: colors.deathsCases,
             data: chartData.deaths
         },
-        {
+        active: {
             label: 'Active Cases',
             backgroundColor: colors.activeCases,
             borderColor: colors.activeCases,
             data: chartData.active
         },
-    ]
+    }
 
     var shownChart = () => {
-        return data[0];
+        return data[caseType];
     }
 
 

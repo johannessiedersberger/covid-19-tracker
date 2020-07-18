@@ -34,6 +34,7 @@ class Tab extends Component{
     componentDidMount(){
         this.setCardValues();
         this.placeEvents();
+        this.changeSelectedButton(this.state.tabRefs.allCasesRef);
     }
 
     setCardValues = () => {
