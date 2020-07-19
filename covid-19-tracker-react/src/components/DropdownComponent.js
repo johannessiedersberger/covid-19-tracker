@@ -56,7 +56,7 @@ import 'semantic-ui-css/semantic.min.css';
             this.props.countryData.map((country) => {
                 if(country.country === selectedCountry){
                     this.props.selectedCountryChanged({
-                            country: country, 
+                            country: country.country, 
                             lat: country.countryInfo.lat,
                             long: country.countryInfo.long,
                         }

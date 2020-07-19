@@ -13,14 +13,36 @@ class Stats extends Component{
     }
 
     componentDidMount(){
-        var chartdata = buildChartData(this.props.historicalData);
+        var chartdata = buildChartData(this.props.historicalDataWorld);
         buildChart(chartdata, this.myRef.current, 'cases');
         //buildPieChart(this.props.worldData,this.pieChartRef.current );
     }
 
-    changeSelectedCaseType(caseType){
-        var chartdata = buildChartData(this.props.historicalData);
+    changeSelectedCaseType(caseType, country){
+        var chartdata = null;
+        if(country === 'worldwide'){
+            chartdata = buildChartData(this.props.historicalDataWorld);
+        }
+        else{
+            chartdata = buildChartData(this.getCountryHistoricalData(country));
+            
+        }
+        
         buildChart(chartdata, this.myRef.current, caseType);
+    }
+
+    getCountryHistoricalData(country){
+        var value = null;
+        this.props.historicalDataCountries.map(
+            (currentCuntry) => {
+                if(currentCuntry.country === country){
+                    
+                    value = currentCuntry.timeline;
+                }
+                
+            }
+        );
+        return value;
     }
 
     render(){
@@ -77,16 +99,16 @@ const buildChartData = (data) => {
         }
         chartData.active.push(newDataPoint);
     }
-    console.log(chartData);
+    
     return chartData;
 }
 
 var chart = null;
 
 const buildChart = (chartData, chartRef, caseType) => {
-    console.log("All if good");
+    
     var timeFormat = 'MM/DD/YY';
-    console.log(chartRef);
+  
     
     var ctx = chartRef.getContext('2d');
     

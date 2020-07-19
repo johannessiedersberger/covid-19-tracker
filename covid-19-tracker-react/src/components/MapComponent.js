@@ -32,7 +32,7 @@ class Map extends Component{
     }     
 
     setMapCenter(lat, long){
-        console.log(lat, long);
+      
         this.setState({mapstate : { center: {lat: lat, lng: long}, caseType: this.state.mapstate.caseType}});
     }
     

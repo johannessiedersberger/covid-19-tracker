@@ -18,7 +18,10 @@ class Main extends Component {
             isLoading: true,
             worldData: null,
             countryData: null,
-            historicalData: null
+            historicalData: null,
+            historicalDataCountries: null, 
+            selectedCountry: 'worldwide',
+            caseType: 'cases'
         }
         this.mapComponent = React.createRef();
         this.statsComponent = React.createRef();
@@ -28,7 +31,8 @@ class Main extends Component {
         
        this.loadWorldData();
        this.loadCountryData();
-       this.loadHistoricalData();
+       this.loadHistoricalDataWorld();
+       this.loadHistoricalDataCountries();
     }
 
     loadWorldData(){
@@ -49,23 +53,35 @@ class Main extends Component {
         });
     }
 
-    loadHistoricalData(){
+    loadHistoricalDataWorld(){
         fetch("https://disease.sh/v3/covid-19/historical/all?lastdays=120")
             .then((response)=>{
-                return response.json()
+                return response.json();
             }).then((data)=>{
-                this.setState({historicalData: data, isLoading: false});
+                this.setState({historicalDataWorld: data, isLoading: true});
+            });
+    }
+
+    loadHistoricalDataCountries(){
+        fetch("https://disease.sh/v3/covid-19/historical?lastdays=120")
+            .then((response)=>{
+                return response.json();
+            }).then((data)=>{
+                this.setState({historicalDataCountries: data, isLoading: false});
             });
     }
 
     caseTypeChanged(caseType){
    
         this.mapComponent.current.changeSelectedCaseType(caseType);
-        this.statsComponent.current.changeSelectedCaseType(caseType);
+        this.statsComponent.current.changeSelectedCaseType(caseType, this.state.selectedCountry);
+        this.setState({caseType: caseType});
     }
 
     selectedCountryChanged(selectedCountry){
         this.mapComponent.current.setMapCenter(selectedCountry.lat, selectedCountry.long);
+        this.statsComponent.current.changeSelectedCaseType(this.state.caseType, selectedCountry.country);
+        this.setState({selectedCountry: selectedCountry.country});
     }
 
     render(){
@@ -84,7 +100,10 @@ class Main extends Component {
                     </div>
                     <div className="col-4">
                         <ListTable countryData={this.state.countryData}/>
-                        <Stats historicalData={this.state.historicalData} worldData={this.state.worldData} ref={this.statsComponent}/>  
+                        <Stats  historicalDataCountries={this.state.historicalDataCountries}
+                                historicalDataWorld={this.state.historicalDataWorld}
+                                worldData={this.state.worldData}
+                                ref={this.statsComponent}/>  
                     </div>
                 </div>
             </div>
