@@ -10,6 +10,16 @@ import 'semantic-ui-css/semantic.min.css';
 
     countryOptions = () =>{
         var countryOptions = [];
+
+        countryOptions.push(
+            {
+                key: 'worldwide',
+                value: 'worldwide',
+                
+                text: 'worldwide'
+            }
+        )
+
         this.props.countryData.map(
             (country) => {
 
@@ -34,17 +44,27 @@ import 'semantic-ui-css/semantic.min.css';
     }
 
     selectionChanged = (selectedCountry) => {
-        console.log(selectedCountry);
-        this.props.countryData.map((country) => {
-            if(country.country === selectedCountry){
-                this.props.selectedCountryChanged({
-                        country: country, 
-                        lat: country.countryInfo.lat,
-                        long: country.countryInfo.long,
-                    }
-                ); 
+        if(selectedCountry === 'worldwide'){
+            this.props.selectedCountryChanged({
+                country: 'worldwide', 
+                lat: 48.135124,
+                long: 11.581981,
             }
-        });
+        ); 
+    }
+        else{
+            this.props.countryData.map((country) => {
+                if(country.country === selectedCountry){
+                    this.props.selectedCountryChanged({
+                            country: country, 
+                            lat: country.countryInfo.lat,
+                            long: country.countryInfo.long,
+                        }
+                    ); 
+                }
+            });
+        }
+        
 
         
     }

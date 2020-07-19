@@ -12,9 +12,6 @@ class Stats extends Component{
         
     }
 
-
-
-
     componentDidMount(){
         var chartdata = buildChartData(this.props.historicalData);
         buildChart(chartdata, this.myRef.current, 'cases');

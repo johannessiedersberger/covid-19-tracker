@@ -7,8 +7,6 @@ class Header extends Component{
         
     }
 
-    
-
     render(){
         return(
             <div className="row header-container">
