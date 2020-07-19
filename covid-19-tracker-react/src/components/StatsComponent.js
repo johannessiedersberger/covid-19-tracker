@@ -8,7 +8,7 @@ class Stats extends Component{
     constructor(props){
         super(props);
         this.myRef = React.createRef();
-        this.pieChartRef = React.createRef();
+        
         
     }
 
@@ -84,12 +84,15 @@ const buildChartData = (data) => {
     return chartData;
 }
 
+var chart = null;
 
 const buildChart = (chartData, chartRef, caseType) => {
     console.log("All if good");
     var timeFormat = 'MM/DD/YY';
     console.log(chartRef);
+    
     var ctx = chartRef.getContext('2d');
+    
     var data = {
         cases: {
             label: 'Total Cases',
@@ -117,19 +120,17 @@ const buildChart = (chartData, chartRef, caseType) => {
         },
     }
 
-    var shownChart = () => {
-        return data[caseType];
-    }
-
-
-    var chart = new Chart(ctx, {
+    if(chart !== null)
+        chart.destroy();
+        
+    chart = new Chart(ctx, {
         // The type of chart we want to create
         type: 'line',
 
         // The data for our dataset
         data: {
             datasets: [
-                shownChart(),
+                data[caseType],
             ]
         },
 
