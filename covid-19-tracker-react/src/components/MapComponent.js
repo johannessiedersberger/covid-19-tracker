@@ -2,7 +2,6 @@ import 'numeral';
 import React, {Component, useState, useEffect} from 'react';
 import mapStyle from '../styles/map-style';
 import '../styles/new-style.css';
-import '../styles/style.css';
 import { GoogleMap, LoadScript, Circle, InfoWindow } from '@react-google-maps/api';
 import CircleComponent from './CircleComponent';
 

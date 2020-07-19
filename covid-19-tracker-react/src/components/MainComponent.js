@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Header from './HeaderComponent';
 import Tab from './TabComponent';
 import '../styles/new-style.css';
-import '../styles/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'numeral';
 import 'moment';
@@ -60,7 +59,7 @@ class Main extends Component {
     }
 
     caseTypeChanged(caseType){
-        console.log(caseType);
+   
         this.mapComponent.current.changeSelectedCaseType(caseType);
         this.statsComponent.current.changeSelectedCaseType(caseType);
     }

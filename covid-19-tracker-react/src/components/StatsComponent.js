@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Chart from 'chart.js';
 import numeral from 'numeral';
 import '../styles/new-style.css';
-import '../styles/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class Stats extends Component{
@@ -30,7 +29,7 @@ class Stats extends Component{
     render(){
         return(
             <div className="row chart-container mt-3">
-                <div className="col  linear-chart mr-3">
+                <div className="col linear-chart">
                     <canvas id="myChart" ref={this.myRef}></canvas>
                 </div>
                 
