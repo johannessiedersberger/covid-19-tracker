@@ -6,7 +6,9 @@ class CircleComponent extends Component {
         super(props);
     
         this.state = {
-            isOpen: false
+            isOpen: false,
+            minCircleSize: 0,
+            maxCircleSize: 3000000
         }
     
     }
@@ -38,13 +40,7 @@ class CircleComponent extends Component {
                 }}
                 
                 center={this.props.countryCenter}
-                radius={this.props.values.cases}
-
-
-                //key={this.props.index}
-                //position={{ lat: this.props.lat, lng: this.props.lng}}
-                label={"blala"}
-                //onClick={() => this.handleToggleOpen()}
+                radius={Math.min(Math.max(this.props.values.cases, this.state.minCircleSize), this.state.maxCircleSize)}
                 onMouseOver={() => this.handleToggleOpen()}
                 onMouseOut={() => this.handleToggleClose()}
             >

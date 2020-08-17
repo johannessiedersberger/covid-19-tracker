@@ -160,6 +160,11 @@ const buildChart = (chartData, chartRef, caseType) => {
                 mode: 'index',
                 intersect: false
             },
+            elements:{
+                point:{
+                    radius: 1
+                }
+            },
             scales:     {
                 xAxes: [{
                     type: "time",
